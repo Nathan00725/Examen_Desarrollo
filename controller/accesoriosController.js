@@ -28,9 +28,9 @@ const postAccesorios = async(req, res)=>{
 const putAccesorios = async (req, res)=>{
 
     const { boca, canion, empunadura, mira, culata } = req.body;
-    const {id} = req.params;
+    const {accesorio_id} = req.params;
     
-    const params = [boca, canion, empunadura, mira, culata, id];
+    const params = [boca, canion, empunadura, mira, culata, accesorio_id];
 
     const sql = `update tbl_accesorios
     set 
@@ -39,7 +39,7 @@ const putAccesorios = async (req, res)=>{
     empunadura  = $3,
     mira        = $4,
     culata      = $5
-    where id    = $6
+    where accesorio_id    = $6
     returning *`;
 
     const result = await db.query(sql, params);
@@ -51,11 +51,11 @@ const putAccesorios = async (req, res)=>{
 
 const deleteAccesorios = async (req, res)=>{
 
-    const {id} = req.params;
-    const params = [ id];
+    const {accesorio_id} = req.params;
+    const params = [ accesorio_id];
 
     const sql = `delete from tbl_accesorios
-    where id = $1
+    where accesorio_id = $1
     returning *`;
 
     const result = await db.query(sql, params);

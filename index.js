@@ -1,11 +1,12 @@
 //const express = require('express');
 import  express  from "express";
-import { Tipo_Arma } from "./routes/apiTipoArma";
-import { Tipo_Disparo } from "./routes/apiTipoDisparo";
-import { Fabricante } from "./routes/apiFabricante";
-import { Calibre } from "./routes/apiCalibre";
-import { Camuflaje } from "./routes/apiCamuflaje";
-import { Accesorios } from "./routes/apiAccesorios";
+import { Tipo_Arma } from "./routes/apiTipoArma.js";
+import { Tipo_Disparo } from "./routes/apiTipoDisparo.js";
+import { Fabricante } from "./routes/apiFabricante.js";
+import { Calibre } from "./routes/apiCalibre.js";
+import { Camuflaje } from "./routes/apiCamuflaje.js";
+import { Accesorios } from "./routes/apiAccesorios.js";
+import { Arma } from "./routes/apiArma.js";
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use('/api/tipoDisparo', Tipo_Disparo);
 app.use('/api/fabricante', Fabricante);
 app.use('/api/calibre', Calibre);
 app.use('/api/camuflaje', Camuflaje);
-app.use('api/accesorios', Accesorios);
+app.use('/api/accesorios', Accesorios);
+app.use('/api/arma', Arma);
 
 app.listen(port, ()=>{
 
