@@ -2,29 +2,34 @@ import {db} from '../db/conn.js';
 
 const getArma =  async (req, res)=>{
   
-    const sql= `SELECT 
-    arma.arma_id AS arma_id,
-    arma.nombre_arma AS nombre_arma,
-    arma.creado AS fecha_creacion_arma,
-    tipo.nombre AS tipo_arma,
-    disparo.tipo AS tipo_disparo,
-    fabricante.fabricante,
-    calibre.calibre,
-    camuflaje.camuflaje,
-    accesorios.boca,
-    accesorios.canion,
-    accesorios.empunadura,
-    accesorios.mira,
-    accesorios.culata
- FROM tbl_arma AS arma
- LEFT JOIN tbl_tipo_arma AS tipo ON arma.id_tipo = tipo.id
- LEFT JOIN tbl_tipo_disparo AS disparo ON arma.id_tipo_disparo = disparo.id
- LEFT JOIN tbl_frabricante AS fabricante ON arma.id_fabricante = fabricante.id
- LEFT JOIN tbl_calibre AS calibre ON arma.id_calibre = calibre.id
- LEFT JOIN tbl_arma_camuflaje AS arma_camuflaje ON arma.arma_id = arma_camuflaje.arma_id
- LEFT JOIN tbl_camuflaje AS camuflaje ON arma_camuflaje.camuflaje_id = camuflaje.camuflaje_id
- LEFT JOIN tbl_arma_accesorio AS arma_accesorio ON arma.arma_id = arma_accesorio.arma_id
- LEFT JOIN tbl_accesorios AS accesorios ON arma_accesorio.accesorio_id = accesorios.accesorio_id;`;
+    const sql= `SELECT
+    a.arma_id,
+    a.nombre_arma,
+    ta.id AS tipo_arma_id,
+    ta.nombre AS tipo_arma,
+    td.id AS tipo_disparo_id,
+    td.tipo AS tipo_disparo,
+    f.id AS fabricante_id,
+    f.fabricante,
+    c.id AS calibre_id,
+    c.calibre,
+    ac.boca,
+    ac.canion,
+    ac.empunadura,
+    ac.mira,
+    ac.culata,
+    cam.camuflaje_id,
+    cam.camuflaje
+FROM
+    tbl_arma a
+    INNER JOIN tbl_tipo_arma ta ON a.id_tipo = ta.id
+    INNER JOIN tbl_tipo_disparo td ON a.id_tipo_disparo = td.id
+    INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+    INNER JOIN tbl_calibre c ON a.id_calibre = c.id
+    LEFT JOIN tbl_arma_camuflaje acam ON a.arma_id = acam.arma_id
+    LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
+    LEFT JOIN tbl_arma_accesorio aa ON a.arma_id = aa.arma_id
+    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;`;
 
     const result = await db.query(sql);
     res.json(result)

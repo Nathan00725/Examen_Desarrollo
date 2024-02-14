@@ -50,8 +50,7 @@ const deleteFabricante = async (req, res)=>{
     const params = [ id];
 
     const sql = `delete from tbl_frabricante
-    where id = $1
-    returning *`;
+    where id = $1 returning *`;
 
     const result = await db.query(sql, params);
 
