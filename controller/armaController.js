@@ -11,8 +11,9 @@ const getArma =  async (req, res)=>{
     td.tipo AS tipo_disparo,
     f.id AS fabricante_id,
     f.fabricante,
-    c.id AS calibre_id,
+    c.id AS calibre_id, 
     c.calibre,
+    ac.accesorio_id, -- Incluido el ID de accesorios aquí
     ac.boca,
     ac.canion,
     ac.empunadura,
