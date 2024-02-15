@@ -7,6 +7,8 @@ import { Calibre } from "./routes/apiCalibre.js";
 import { Camuflaje } from "./routes/apiCamuflaje.js";
 import { Accesorios } from "./routes/apiAccesorios.js";
 import { Arma } from "./routes/apiArma.js";
+import { ArmaCamuflaje} from "./routes/apiarmacamuflaje.js";
+import { ArmaAccesorios } from "./routes/apiArmaAcessorio.js";
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.use('/api/calibre', Calibre);
 app.use('/api/camuflaje', Camuflaje);
 app.use('/api/accesorios', Accesorios);
 app.use('/api/arma', Arma);
+app.use('/api/armacamuflaje', ArmaCamuflaje);
+app.use('/api/armaaccesorio', ArmaAccesorios);
 
 app.listen(port, ()=>{
 

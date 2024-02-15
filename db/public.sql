@@ -66,22 +66,23 @@ create table tbl_arma
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
+
 CREATE TABLE tbl_arma_camuflaje
 (
+    id SERIAL PRIMARY KEY,
     arma_id INT,
     camuflaje_id INT,
-    PRIMARY KEY (arma_id, camuflaje_id),
     FOREIGN KEY (arma_id) REFERENCES tbl_arma(arma_id) ON DELETE CASCADE,
     FOREIGN KEY (camuflaje_id) REFERENCES tbl_camuflaje(camuflaje_id) ON DELETE CASCADE
 );
 
-
+ 
 
 CREATE TABLE tbl_arma_accesorio
 (
+    id SERIAL PRIMARY KEY,
     arma_id int,
     accesorio_id int,
-    PRIMARY KEY (arma_id, accesorio_id),
     FOREIGN KEY (arma_id) REFERENCES tbl_arma(arma_id) ON DELETE CASCADE,
     FOREIGN KEY (accesorio_id) REFERENCES tbl_accesorios(accesorio_id) ON DELETE CASCADE
 );
@@ -91,13 +92,13 @@ Delete from tbl_tipo_arma
 drop Table tbl_arma_camuflaje
 
 
-drop TABLE tbl_arma_camuflaje
+drop TABLE tbl_arma_accesorio
 
 
 select * from tbl_arma_camuflaje
 
 
-select * from tbl_arma
+select * from tbl_arma_accesorio
 
 
 Delete from tbl_accesorios
@@ -181,28 +182,81 @@ LEFT JOIN tbl_arma_camuflaje arma_camuflaje ON arma.arma_id = arma_camuflaje.arm
 LEFT JOIN tbl_camuflaje camuflaje ON arma_camuflaje.camuflaje_id = camuflaje.camuflaje_id;
 
 
+ 
 
-
-SELECT
+    SELECT
     a.arma_id,
     a.nombre_arma,
+    ta.id AS tipo_arma_id,
     ta.nombre AS tipo_arma,
+    td.id AS tipo_disparo_id,
     td.tipo AS tipo_disparo,
+    f.id AS fabricante_id,
     f.fabricante,
+    c.id AS calibre_id, 
     c.calibre,
     ac.boca,
     ac.canion,
     ac.empunadura,
     ac.mira,
-    ac.culata
+    ac.culata,
+    cam.camuflaje_id,
+    cam.camuflaje
 FROM
     tbl_arma a
     INNER JOIN tbl_tipo_arma ta ON a.id_tipo = ta.id
     INNER JOIN tbl_tipo_disparo td ON a.id_tipo_disparo = td.id
     INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
     INNER JOIN tbl_calibre c ON a.id_calibre = c.id
+    LEFT JOIN tbl_arma_camuflaje acam ON a.arma_id = acam.arma_id
+    LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
     LEFT JOIN tbl_arma_accesorio aa ON a.arma_id = aa.arma_id
     LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;
+
+
+
+
+
+
+
+    ac.acceorio_id,    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accerio_id
+
+
+
+
+
+     SELECT
+    a.arma_id,
+    a.nombre_arma,
+    ta.id AS tipo_arma_id,
+    ta.nombre AS tipo_arma,
+    td.id AS tipo_disparo_id,
+    td.tipo AS tipo_disparo,
+    f.id AS fabricante_id,
+    f.fabricante,
+    c.id AS calibre_id,
+    c.calibre,
+    ac.boca,
+    ac.canion,
+    ac.empunadura,
+    ac.mira,
+    ac.culata,
+    cam.camuflaje_id,
+    cam.camuflaje
+FROM
+    tbl_arma a
+    INNER JOIN tbl_tipo_arma ta ON a.id_tipo = ta.id
+    INNER JOIN tbl_tipo_disparo td ON a.id_tipo_disparo = td.id
+    INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+    INNER JOIN tbl_calibre c ON a.id_calibre = c.id
+    LEFT JOIN tbl_arma_camuflaje acam ON a.id = acam.id
+    LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
+    LEFT JOIN tbl_arma_accesorio aa ON a.id = aa.id
+    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;
+
+
+
+
 
 
 
@@ -215,8 +269,9 @@ FROM
     td.tipo AS tipo_disparo,
     f.id AS fabricante_id,
     f.fabricante,
-    c.id AS calibre_id,
+    c.id AS calibre_id, 
     c.calibre,
+    ac.accesorio_id, -- Incluido el ID de accesorios aquí
     ac.boca,
     ac.canion,
     ac.empunadura,
