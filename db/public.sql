@@ -39,7 +39,7 @@ CREATE TABLE tbl_camuflaje
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
-
+SELECT * from tbl_accesorios
 
 create table tbl_accesorios
 (
@@ -104,7 +104,7 @@ select * from tbl_arma_accesorio
 Para probar codigo
 */
 
-
+ 
     SELECT
     a.arma_id,
     a.nombre_arma,
@@ -134,3 +134,6 @@ FROM
     LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
     LEFT JOIN tbl_arma_accesorio aa ON a.arma_id = aa.arma_id
     LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;
+
+
+    

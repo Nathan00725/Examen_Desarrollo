@@ -1,5 +1,6 @@
 //const express = require('express');
 import  express  from "express";
+const app = express();
 import { Tipo_Arma } from "./routes/apiTipoArma.js";
 import { Tipo_Disparo } from "./routes/apiTipoDisparo.js";
 import { Fabricante } from "./routes/apiFabricante.js";
@@ -9,12 +10,19 @@ import { Accesorios } from "./routes/apiAccesorios.js";
 import { Arma } from "./routes/apiArma.js";
 import { ArmaCamuflaje} from "./routes/apiarmacamuflaje.js";
 import { ArmaAccesorios } from "./routes/apiArmaAcessorio.js";
+import cors from 'cors';
 
-const app = express();
 
-//middlewares
-
+// Middleware 
 app.use(express.json());
+const corsOptions = {
+    origin : 'http://localhost:5173', 
+    credentials : true,
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}
+
+app.use(cors(corsOptions));
 
 const port = 6000;
 
@@ -31,4 +39,6 @@ app.use('/api/armaaccesorio', ArmaAccesorios);
 app.listen(port, ()=>{
 
     console.log(`Escuchando en el puerto ${port} `);
+
+
 });
