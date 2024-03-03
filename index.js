@@ -16,7 +16,7 @@ import cors from 'cors';
 // Middleware 
 app.use(express.json());
 const corsOptions = {
-    origin : 'http://localhost:5173', 
+    origin : 'http://localhost@5432@api_examen', 
     credentials : true,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -24,7 +24,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const port = 6000;
+const port = 5000;
 
 app.use('/api/tipoArma', Tipo_Arma);
 app.use('/api/tipoDisparo', Tipo_Disparo);
