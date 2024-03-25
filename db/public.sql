@@ -76,6 +76,10 @@ create table tbl_usuarios
 
 drop table tbl_arma
 
+
+SELECT * from tbl_arma
+
+
 create table tbl_arma
 (
     arma_id SERIAL PRIMARY KEY,
@@ -84,7 +88,7 @@ create table tbl_arma
     id_tipo_disparo int REFERENCES tbl_tipo_disparo(id),
     id_fabricante int REFERENCES tbl_frabricante(id),
     id_calibre int REFERENCES tbl_calibre(id),
-    id_nombre_usuario varchar(20) REFERENCES tbl_usuarios(nombre_usuario),
+   /* nombre_usuario varchar(20) REFERENCES tbl_usuarios(nombre_usuario),*/
     creado TIMESTAMP DEFAULT current_timestamp
 );
 drop table tbl_imagen
@@ -289,3 +293,39 @@ VALUES
     ('Nathan_Crak', 'Nathan_Crak@gmail.edu', 'hola', 'Nathan', 'Lopez'),
     ('Nathan-Rachoo', 'usuario2@ceutec.edu', 'hola', 'Nathan', 'Lopez'),
     ('Algo_azar', 'usuario3@yahoo.com', 'hola', 'Algo', 'Azar');
+
+
+
+
+    SELECT
+    a.arma_id,
+    a.nombre_arma,
+    ta.id AS tipo_arma_id,
+    ta.nombre AS tipo_arma,
+    td.id AS tipo_disparo_id,
+    td.tipo AS tipo_disparo,
+    f.id AS fabricante_id,
+    f.fabricante,
+    c.id AS calibre_id, 
+    c.calibre,
+    ac.accesorio_id,
+    ac.boca,
+    ac.canion,
+    ac.empunadura,
+    ac.mira,
+    ac.culata,
+    cam.camuflaje_id,
+    cam.camuflaje,
+    u.nombre_usuario AS usuario_id,
+    u.nombre AS nombre_usuario
+FROM
+    tbl_arma a
+    INNER JOIN tbl_tipo_arma ta ON a.id_tipo = ta.id
+    INNER JOIN tbl_tipo_disparo td ON a.id_tipo_disparo = td.id
+    INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+    INNER JOIN tbl_calibre c ON a.id_calibre = c.id
+    LEFT JOIN tbl_arma_camuflaje acam ON a.arma_id = acam.arma_id
+    LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
+    LEFT JOIN tbl_arma_accesorio aa ON a.arma_id = aa.arma_id
+    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id
+    LEFT JOIN tbl_usuarios u ON a.arma_id = u.nombre_usuario; -- Modificar esta línea si se une por el nombre de usuario

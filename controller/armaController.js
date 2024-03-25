@@ -13,14 +13,16 @@ const getArma =  async (req, res)=>{
     f.fabricante,
     c.id AS calibre_id, 
     c.calibre,
-    ac.accesorio_id, -- Incluido el ID de accesorios aquí
+    ac.accesorio_id,
     ac.boca,
     ac.canion,
     ac.empunadura,
     ac.mira,
     ac.culata,
     cam.camuflaje_id,
-    cam.camuflaje
+    cam.camuflaje,
+    u.nombre_usuario AS usuario_id,
+    u.nombre AS nombre_usuario
 FROM
     tbl_arma a
     INNER JOIN tbl_tipo_arma ta ON a.id_tipo = ta.id
@@ -30,7 +32,8 @@ FROM
     LEFT JOIN tbl_arma_camuflaje acam ON a.arma_id = acam.arma_id
     LEFT JOIN tbl_camuflaje cam ON acam.camuflaje_id = cam.camuflaje_id
     LEFT JOIN tbl_arma_accesorio aa ON a.arma_id = aa.arma_id
-    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;`;
+    LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id
+    LEFT JOIN tbl_usuarios u ON a.arma_id = u.nombre_usuario;`;
 
     const result = await db.query(sql);
     res.json(result)
