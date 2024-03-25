@@ -15,6 +15,7 @@ create table tbl_tipo_disparo
     creado TIMESTAMP DEFAULT current_timestamp 
 );
 
+select * from tbl_tipo_disparo
 
 create table tbl_fabricante
 (
@@ -23,6 +24,7 @@ create table tbl_fabricante
    creado TIMESTAMP DEFAULT current_timestamp
 );
 
+select * from tbl_fabricante
 
 create table tbl_calibre
 (
@@ -31,6 +33,7 @@ create table tbl_calibre
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
+select * from tbl_calibre
 
 CREATE TABLE tbl_camuflaje
 (
@@ -39,7 +42,9 @@ CREATE TABLE tbl_camuflaje
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
-SELECT * from tbl_accesorios
+select * from tbl_camuflaje
+
+DELETE FROM tbl_accesorios WHERE accesorio_id = '14';
 
 create table tbl_accesorios
 (
@@ -52,7 +57,24 @@ create table tbl_accesorios
     creado TIMESTAMP DEFAULT current_timestamp
 );
 
+select * from tbl_accesorios
 
+drop table tbl_usuarios
+
+SELECT * From tbl_usuarios
+
+create table tbl_usuarios 
+(
+    nombre_usuario varchar(20) primary key,
+    correo_electronico varchar(50),
+    contrasena varchar(20),
+    nombre varchar(200),
+    apellido varchar(200),
+    activo BOOLEAN DEFAULT true,
+    fecha_creacion TIMESTAMP DEFAULT current_timestamp 
+);
+
+drop table tbl_arma
 
 create table tbl_arma
 (
@@ -61,10 +83,29 @@ create table tbl_arma
     id_tipo int REFERENCES tbl_tipo_arma(id),
     id_tipo_disparo int REFERENCES tbl_tipo_disparo(id),
     id_fabricante int REFERENCES tbl_frabricante(id),
-    id_calibre int REFERENCES tbl_calibre(id),  
+    id_calibre int REFERENCES tbl_calibre(id),
+    id_nombre_usuario varchar(20) REFERENCES tbl_usuarios(nombre_usuario),
     creado TIMESTAMP DEFAULT current_timestamp
 );
+drop table tbl_imagen
 
+SELECT * FROM tbl_imagen
+
+create table tbl_imagen
+(
+    id SERIAL PRIMARY Key,
+    imagen bytea,
+    mime_type varchar(500),
+    nombre_archivo varchar(500),
+    caption varchar(300),
+    nombre_usuario varchar(20) REFERENCES tbl_usuarios(nombre_usuario),
+    ingresado TIMESTAMP DEFAULT current_timestamp,
+    activo bool DEFAULT true
+);
+
+
+
+drop table tbl_arma_camuflaje
 
 CREATE TABLE tbl_arma_camuflaje
 (
@@ -75,7 +116,7 @@ CREATE TABLE tbl_arma_camuflaje
     FOREIGN KEY (camuflaje_id) REFERENCES tbl_camuflaje(camuflaje_id) ON DELETE CASCADE
 );
 
- 
+drop Table tbl_arma_accesorio
 
 CREATE TABLE tbl_arma_accesorio
 (
@@ -136,4 +177,115 @@ FROM
     LEFT JOIN tbl_accesorios ac ON aa.accesorio_id = ac.accesorio_id;
 
 
-    
+    Select * FROM tbl_arma
+
+
+
+
+SELECT a.arma_id, 
+                    a.nombre_arma, 
+                    a.id_tipo, 
+                    t.nombre AS tipo_arma,
+                    a.id_tipo_disparo, 
+                    d.tipo AS tipo_disparo,
+                    a.id_fabricante, 
+                    f.id AS fabricante_id,
+                    f.fabricante,
+                    a.id_calibre, 
+                    c.calibre AS nombre_calibre
+            FROM tbl_arma a
+            INNER JOIN tbl_tipo_arma t ON a.id_tipo = t.id
+            INNER JOIN tbl_tipo_disparo d ON a.id_tipo_disparo = d.id
+            INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+            INNER JOIN tbl_calibre c ON a.id_calibre = c.id;
+
+
+
+            SELECT a.arma_id, 
+       a.nombre_arma, 
+       t.nombre AS tipo_arma,
+       d.tipo AS tipo_disparo, 
+       f.id AS fabricante_id,
+        f.fabricante,
+       c.calibre AS nombre_calibre
+FROM tbl_arma a
+INNER JOIN tbl_tipo_arma t ON a.id_tipo = t.id
+INNER JOIN tbl_tipo_disparo d ON a.id_tipo_disparo = d.id 
+INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+INNER JOIN tbl_calibre c ON a.id_calibre = c.id
+WHERE a.arma_id = $1;
+
+
+SELECT a.arma_id, 
+       a.nombre_arma, 
+       a.id_tipo, 
+       t.nombre AS tipo_arma,
+       a.id_tipo_disparo, 
+       d.tipo AS tipo_disparo,
+       a.id_fabricante, 
+       f.id AS fabricante_id,
+       f.fabricante,
+       a.id_calibre, 
+       c.calibre AS nombre_calibre,
+       u.nombre AS nombre_usuario
+FROM tbl_arma a
+JOIN tbl_tipo_arma t ON a.id_tipo = t.id
+JOIN tbl_tipo_disparo d ON a.id_tipo_disparo = d.id
+INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+JOIN tbl_calibre c ON a.id_calibre = c.id
+JOIN tbl_usuarios u ON a.id_nombre_usuario = u.nombre_usuario;
+
+
+
+SELECT a.arma_id, 
+       a.nombre_arma, 
+       a.id_tipo, 
+       t.nombre AS tipo_arma,
+       a.id_tipo_disparo, 
+       d.tipo AS tipo_disparo,
+       a.id_fabricante, 
+       f.id AS fabricante_id,
+       f.fabricante,
+       a.id_calibre, 
+       c.calibre AS nombre_calibre,
+       u.nombre AS nombre_usuario,
+       u.activo 
+FROM tbl_arma a
+JOIN tbl_tipo_arma t ON a.id_tipo = t.id
+JOIN tbl_tipo_disparo d ON a.id_tipo_disparo = d.id
+INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+JOIN tbl_calibre c ON a.id_calibre = c.id
+JOIN tbl_usuarios u ON a.id_nombre_usuario = u.nombre_usuario;
+
+
+
+
+
+SELECT a.arma_id, 
+       a.nombre_arma, 
+       a.id_tipo, 
+       t.nombre AS tipo_arma,
+       a.id_tipo_disparo, 
+       d.tipo AS tipo_disparo,
+       a.id_fabricante, 
+       f.id AS fabricante_id,
+       f.fabricante,
+       a.id_calibre, 
+       c.calibre AS nombre_calibre,
+       u.nombre AS nombre_usuario,
+       u.activo 
+FROM tbl_arma a
+JOIN tbl_tipo_arma t ON a.id_tipo = t.id
+JOIN tbl_tipo_disparo d ON a.id_tipo_disparo = d.id
+INNER JOIN tbl_frabricante f ON a.id_fabricante = f.id
+JOIN tbl_calibre c ON a.id_calibre = c.id
+JOIN tbl_usuarios u ON a.id_nombre_usuario = u.nombre_usuario
+WHERE u.nombre_usuario = 1;
+
+
+
+INSERT INTO tbl_usuarios (nombre_usuario, correo_electronico, contrasena, nombre, apellido)
+VALUES 
+    ('Nathan_Crak', 'Nathan_Crak@gmail.edu', 'hola', 'Nathan', 'Lopez'),
+    ('Nathan-Rachoo', 'usuario2@ceutec.edu', 'hola', 'Nathan', 'Lopez'),
+    ('Algo_azar', 'usuario3@yahoo.com', 'hola', 'Algo', 'Azar');

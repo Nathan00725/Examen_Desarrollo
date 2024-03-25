@@ -28,13 +28,13 @@ const postCamuflaje = async(req, res)=>{
 const putCamuflaje = async (req, res)=>{
 
     const { camuflaje } = req.body;
-    const {id} = req.params;
+    const {camuflaje_id} = req.params;
     
-    const params = [camuflaje, id];
+    const params = [camuflaje, camuflaje_id];
 
     const sql = `update tbl_camuflaje
     set camuflaje = $1
-    where id = $2
+    where camuflaje_id = $2
     returning *`;
 
     const result = await db.query(sql, params);
@@ -46,11 +46,11 @@ const putCamuflaje = async (req, res)=>{
 
 const deleteCamuflaje = async (req, res)=>{
 
-    const {id} = req.params;
-    const params = [ id];
+    const {camuflaje_id} = req.params;
+    const params = [ camuflaje_id];
 
     const sql = `delete from tbl_camuflaje
-    where id = $1
+    where camuflaje_id = $1
     returning *`;
 
     const result = await db.query(sql, params);

@@ -5,7 +5,7 @@ import {getAccesorios, postAccesorios, putAccesorios, deleteAccesorios} from "..
 
 Accesorios.get('', getAccesorios);
 Accesorios.post('', postAccesorios);
-Accesorios.put('/:id', putAccesorios);
-Accesorios.delete('/:id', deleteAccesorios);
+Accesorios.put('/:accesorio_id', putAccesorios);
+Accesorios.delete('/:accesorio_id', deleteAccesorios);
 
 export {Accesorios}

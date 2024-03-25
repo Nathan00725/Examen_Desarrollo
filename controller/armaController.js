@@ -60,7 +60,7 @@ const postArma = async(req, res)=>{
  const putArma = async (req, res)=>{
 
     const { nombre_arma , id_tipo, id_tipo_disparo, id_fabricante,
-        id_calibre, id_camuflaje} = req.body;
+        id_calibre} = req.body;
 
     const {arma_id} = req.params
 

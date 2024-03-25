@@ -5,7 +5,7 @@ import {getArma, postArma, putArma, deleteArma} from "../controller/armaControll
 
 Arma.get('', getArma);
 Arma.post('', postArma);
-Arma.put('/:id', putArma);
-Arma.delete('/:id', deleteArma);
+Arma.put('/:arma_id', putArma);
+Arma.delete('/:arma_id', deleteArma);
 
 export {Arma}

@@ -5,7 +5,7 @@ import {getCamuflaje, postCamuflaje, putCamuflaje, deleteCamuflaje} from "../con
 
 Camuflaje.get('', getCamuflaje);
 Camuflaje.post('', postCamuflaje);
-Camuflaje.put('/:id', putCamuflaje);
-Camuflaje.delete('/:id', deleteCamuflaje);
+Camuflaje.put('/:camuflaje_id', putCamuflaje);
+Camuflaje.delete('/:camuflaje_id', deleteCamuflaje);
 
 export {Camuflaje}

@@ -53,6 +53,7 @@ const deleteAccesorios = async (req, res)=>{
 
     const {accesorio_id} = req.params;
     const params = [ accesorio_id];
+    console.log(accesorio_id);
 
     const sql = `delete from tbl_accesorios
     where accesorio_id = $1

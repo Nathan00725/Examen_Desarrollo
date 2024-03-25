@@ -10,13 +10,17 @@ import { Accesorios } from "./routes/apiAccesorios.js";
 import { Arma } from "./routes/apiArma.js";
 import { ArmaCamuflaje} from "./routes/apiarmacamuflaje.js";
 import { ArmaAccesorios } from "./routes/apiArmaAcessorio.js";
+import { publicacion } from "./routes/apiPublicaciones.js"
+import { usuarioCrud } from "./routes/apiUserCruds.js";
+import { usuario } from "./routes/apiUser.js";
 import cors from 'cors';
+
 
 
 // Middleware 
 app.use(express.json());
 const corsOptions = {
-    origin : 'http://localhost@5432@api_examen', 
+    origin : 'http://localhost:5173', 
     credentials : true,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -35,6 +39,9 @@ app.use('/api/accesorios', Accesorios);
 app.use('/api/arma', Arma);
 app.use('/api/armacamuflaje', ArmaCamuflaje);
 app.use('/api/armaaccesorio', ArmaAccesorios);
+app.use('/api/publicacion', publicacion);
+app.use('/api/usuarioCrud', usuarioCrud);
+app.use('/api/User', usuario);
 
 app.listen(port, ()=>{
 
@@ -42,3 +49,4 @@ app.listen(port, ()=>{
 
 
 });
+
